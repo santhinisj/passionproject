@@ -16,9 +16,9 @@ namespace passionProjectApplication.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/CocktailsData/ListCocktails
+        // GET: api/CocktailsData/List
         [HttpGet]
-        public IEnumerable<CocktailDto> ListCocktails()
+        public IEnumerable<CocktailDto> List()
         {
             List<Cocktail> Cocktails = db.CocktailSet.ToList();
             List<CocktailDto> CocktailDtos = new List<CocktailDto>();

@@ -16,14 +16,14 @@ namespace passionProjectApplication.Controllers
         public ActionResult List()
         {
             HttpClient client = new HttpClient() { };
-            string url = "https://localhost:44329/api/CocktailsData/ListCocktails";
+            string url = "https://localhost:44329/api/CocktailsData/List";
             HttpResponseMessage response = client.GetAsync(url).Result;
             Debug.WriteLine("The response code is");
             Debug.WriteLine(response.StatusCode);
 
             IEnumerable<CocktailDto> cocktails = response.Content.ReadAsAsync<IEnumerable<CocktailDto>>().Result;
             Debug.WriteLine("Number of animals recieved");
-            return View();
+            return View(cocktails);
         }
 
         // GET: Cocktail/Details/5
