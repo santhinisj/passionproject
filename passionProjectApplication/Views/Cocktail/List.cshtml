@@ -1,0 +1,14 @@
+﻿@model IEnumerable<passionProjectApplication.Models.CocktailDto>
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List Of All Cocktails</h2>
+@foreach (var cocktail in Model)
+{
+    if (cocktail!=null)
+    {
+        <h1>cocktail.CocktailName</h1>
+    }
+
+}

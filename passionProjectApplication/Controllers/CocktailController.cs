@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Net.Http;
+using System.Diagnostics;
+using passionProjectApplication.Models;
 
 namespace passionProjectApplication.Controllers
 {
@@ -10,8 +13,16 @@ namespace passionProjectApplication.Controllers
     {
         // GET: Cocktail 
 
-        public ActionResult Index()
+        public ActionResult List()
         {
+            HttpClient client = new HttpClient() { };
+            string url = "https://localhost:44329/api/CocktailsData/ListCocktails";
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            Debug.WriteLine("The response code is");
+            Debug.WriteLine(response.StatusCode);
+
+            IEnumerable<CocktailDto> cocktails = response.Content.ReadAsAsync<IEnumerable<CocktailDto>>().Result;
+            Debug.WriteLine("Number of animals recieved");
             return View();
         }
 

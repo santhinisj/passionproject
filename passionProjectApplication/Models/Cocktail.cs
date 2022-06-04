@@ -11,4 +11,11 @@ namespace passionProjectApplication.Models
         public string CocktailName { get; set; }
         public bool IsIceRequired { get; set; }
     }
+
+    public class CocktailDto
+    {
+        public int CocktailId { get; set; }
+        public string CocktailName { get; set; }
+        public bool IsIceRequired { get; set; }
+    }
 }

@@ -18,9 +18,18 @@ namespace passionProjectApplication.Controllers
 
         // GET: api/CocktailsData/ListCocktails
         [HttpGet]
-        public IQueryable<Cocktail> ListCocktails()
+        public IEnumerable<CocktailDto> ListCocktails()
         {
-            return db.CocktailSet;
+            List<Cocktail> Cocktails = db.CocktailSet.ToList();
+            List<CocktailDto> CocktailDtos = new List<CocktailDto>();
+            Cocktails.ForEach(a => CocktailDtos.Add(new CocktailDto()
+            {
+                CocktailId = a.CocktailId,
+                CocktailName = a.CocktailName,
+                IsIceRequired = a.IsIceRequired
+
+            }));
+            return CocktailDtos;
         }
 
         // GET: api/CocktailsData/findCocktail/5
