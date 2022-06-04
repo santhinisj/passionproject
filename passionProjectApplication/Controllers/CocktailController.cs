@@ -9,6 +9,7 @@ namespace passionProjectApplication.Controllers
     public class CocktailController : Controller
     {
         // GET: Cocktail 
+
         public ActionResult Index()
         {
             return View();
