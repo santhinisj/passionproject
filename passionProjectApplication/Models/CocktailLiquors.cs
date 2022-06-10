@@ -11,7 +11,7 @@ namespace passionProjectApplication.Models
         public int CocktailLiquorsId { get; set; }
         [ForeignKey("Liquor")]
         public int LiquorId { get; set; }
-        public virtual Liquor Liquor { get; set; }
+        //public virtual Liquor Liquor { get; set; }
 
         [ForeignKey("Cocktail")]
         public int CocktailId { get; set; }

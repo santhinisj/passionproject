@@ -20,7 +20,7 @@ namespace passionProjectApplication.Controllers
         [HttpGet]
         public IEnumerable<CocktailDto> List()
         {
-            List<Cocktail> Cocktails = db.CocktailSet.ToList();
+            List<Cocktail> Cocktails = db.Cocktails.ToList();
             List<CocktailDto> CocktailDtos = new List<CocktailDto>();
             Cocktails.ForEach(a => CocktailDtos.Add(new CocktailDto()
             {
@@ -37,14 +37,21 @@ namespace passionProjectApplication.Controllers
         [HttpGet]
         public IHttpActionResult FindCocktail(int id)
         {
-            Cocktail cocktail = db.CocktailSet.Find(id);
+            Cocktail Cocktail = db.Cocktails.Find(id);
+            CocktailDto CocktailDto = new CocktailDto()
+            {
+                CocktailId = Cocktail.CocktailId,
+                CocktailName = Cocktail.CocktailName,
+                IsIceRequired = Cocktail.IsIceRequired
+
+            };
             
-            if (cocktail == null)
+            if (Cocktail == null)
             {
                 return NotFound();
             }
 
-            return Ok(cocktail);
+            return Ok(CocktailDto);
         }
 
         // PUT: api/CocktailsData/UpdateCocktail/5
@@ -93,27 +100,27 @@ namespace passionProjectApplication.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.CocktailSet.Add(cocktail);
+            db.Cocktails.Add(cocktail);
             db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = cocktail.CocktailId }, cocktail);
         }
 
-        // DELETE: api/CocktailsData/DeleteAnimal/5
+        // DELETE: api/CocktailsData/DeleteCocktail/5
         [ResponseType(typeof(Cocktail))]
         [HttpPost]
         public IHttpActionResult DeleteCocktail(int id)
         {
-            Cocktail cocktail = db.CocktailSet.Find(id);
+            Cocktail cocktail = db.Cocktails.Find(id);
             if (cocktail == null)
             {
                 return NotFound();
             }
 
-            db.CocktailSet.Remove(cocktail);
+            db.Cocktails.Remove(cocktail);
             db.SaveChanges();
 
-            return Ok(cocktail);
+            return Ok();
         }
 
         protected override void Dispose(bool disposing)
@@ -127,7 +134,7 @@ namespace passionProjectApplication.Controllers
 
         private bool CocktailExists(int id)
         {
-            return db.CocktailSet.Count(e => e.CocktailId == id) > 0;
+            return db.Cocktails.Count(e => e.CocktailId == id) > 0;
         }
     }
 }

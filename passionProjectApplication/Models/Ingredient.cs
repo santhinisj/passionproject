@@ -6,10 +6,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace passionProjectApplication.Models
 {
-    public class Liquor
+    public class Ingredient
     {
         [Key]
-        public int LiquorID { get; set; }
-        public string LiquorName { get; set; }
+        public int IngredientId { get; set; }
+        public string IngredientName { get; set; }
+
+        public ICollection<Cocktail> Cocktails { get; set; } 
     }
 }

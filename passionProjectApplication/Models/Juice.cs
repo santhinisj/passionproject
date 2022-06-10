@@ -9,5 +9,7 @@ namespace passionProjectApplication.Models
     {
         public int JuiceId { get; set; }
         public string JuiceName { get; set; }
+
+        public ICollection<Cocktail> cocktails { get; set; }   
     }
 }

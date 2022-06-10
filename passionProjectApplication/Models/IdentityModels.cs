@@ -26,12 +26,12 @@ namespace passionProjectApplication.Models
         }
 
         //add liquor entity to our system
-        public DbSet<Liquor> LiquorSet { get; set; }
-        public DbSet<Juice> JuiceSet { get; set; }
-        public DbSet<Cocktail> CocktailSet { get; set; }
-        public DbSet<CocktailLiquors> CocktailLiquorsSet { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
+        //public DbSet<Juice> JuiceSet { get; set; }
+        public DbSet<Cocktail> Cocktails { get; set; }
+        //public DbSet<CocktailLiquors> CocktailLiquorsSet { get; set; }
 
-        public DbSet<CocktailJuice> CocktailJuiceSet { get; set; }
+        //public DbSet<CocktailJuice> CocktailJuiceSet { get; set; }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

@@ -1,0 +1,11 @@
+﻿@model passionProjectApplication.Models.CocktailDto
+@{
+    ViewBag.Title = "View";
+    Layout = "Details";
+}
+
+<a href="/cocktail/list">Go back to list</a>
+<h2>@Model.CocktailName</h2>
+<div>Is ice required for the cocktail: @Model.IsIceRequired</div>
+
+

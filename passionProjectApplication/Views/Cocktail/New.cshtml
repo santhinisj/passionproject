@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "New";
+}
+
+<h2>Create A New Cocktail</h2>
+<form action="/cocktail/create" method="POST">
+    <div>
+        <label>Enter the cocktail name:</label><input type="text" name="CocktailName" />
+    </div>
+    <div>
+        <label>Is ice required:</label>
+        <select name="IsIceRequired">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+        </select>
+    </div>
+    <div>
+        <input type="submit" value="Add the cocktail" />
+    </div>
+</form>
+
