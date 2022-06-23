@@ -1,0 +1,63 @@
+﻿@model passionProjectApplication.Models.ViewModels.UpdateCocktail
+
+@{ 
+    ViewBag.Title = "Edit";
+}
+<style>
+    .main {
+        margin-top: 3rem;
+        border: 1px solid black;
+        padding: 1rem;
+        text-align: center;
+        border-radius: 8px;
+        background: black;
+        color: white;
+    }
+
+    .heading {
+        background: black;
+        color: white;
+    }
+
+    .button {
+        background: antiquewhite;
+        padding: 10px;
+        border: 1px solid black;
+        border-radius: 4px;
+        color: black;
+    }
+
+    .name {
+        color: navajowhite;
+    }
+    </style>
+
+<div class="main">
+    <h2>Update Cocktail</h2>
+
+    <form action="/cocktail/update/@Model.selectedCocktail.CocktailId" method="post">
+        <div style="display:none;">
+            <input type="text" name="CocktailId" value="@Model.selectedCocktail.CocktailId" style="color:black"/>
+        </div>
+        <div>
+            <label>Name : </label><input type="text" name="CocktailName" value="@Model.selectedCocktail.CocktailName" style="color:black"/>
+        </div>
+        <div>
+            <label>Is Ice Required : </label>
+            <select name="IsIceRequired" value="@Model.selectedCocktail.IsIceRequired" style="color:black">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+        <div>
+            <label>Category : </label>
+            <select name="CategoryId" style="color:black">
+                @foreach (var category in Model.CategoriesOptions)
+                {
+                    <option value="@category.CategoryId">@category.CategoryName</option>
+                }
+            </select>
+        </div>
+        <input type="submit" value="Update Cocktail" class="button"/>
+    </form>
+</div>

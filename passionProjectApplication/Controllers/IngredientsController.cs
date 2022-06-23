@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Net.Http;
@@ -11,12 +10,10 @@ using passionProjectApplication.Models.ViewModels;
 
 namespace passionProjectApplication.Controllers
 {
-    public class CocktailController : Controller
+    public class IngredientsController : Controller
     {
-        // GET: Cocktail 
         private static readonly HttpClient client;
-
-        static CocktailController()
+        static IngredientsController()
         {
             client = new HttpClient();
             client.BaseAddress = new Uri("https://localhost:44329/api/");
@@ -24,59 +21,58 @@ namespace passionProjectApplication.Controllers
 
         public ActionResult List()
         {
-            //objective: communicte with cocktail api to get the list
-           
-            string url = "cocktailsdata/List";
-            HttpResponseMessage response = client.GetAsync(url).Result;
-            IEnumerable<CocktailDto> cocktails = response.Content.ReadAsAsync<IEnumerable<CocktailDto>>().Result;
+            //objective: communicte with Ingredients api to get the list
 
-  
-            return View(cocktails);
+            string url = "ingredientdata/List";
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            IEnumerable<IngredientDto> Ingredientss = response.Content.ReadAsAsync<IEnumerable<IngredientDto>>().Result;
+
+
+            return View(Ingredientss);
         }
 
-        // GET: Cocktail/Details/5
+        // GET: Ingredients/Details/5
         public ActionResult Details(int id)
         {
-            //communicate with cocktail data api to retrieve one animal
-            DetailsCocktail ViewModel =  new DetailsCocktail();
-            string url = "CocktailsData/findcocktail/" + id;
-            HttpResponseMessage response = client.GetAsync(url).Result;
-            CocktailDto selectedCocktail = response.Content.ReadAsAsync<CocktailDto>().Result;
-           // url = "ingredientdata/ListIngredientsForCocktail" + id;
-            //response = client.GetAsync(url).Result;
-            //IEnumerable<IngredientDto> AllIngredients = response.Content.ReadAsAsync<IEnumerable<IngredientDto>>().Result;
+            //communicate with Ingredients data api to retrieve one animal
+            DetailsIngredients ViewModel =  new DetailsIngredients();
 
-            ///ViewModel.AllIngredients = AllIngredients;
-            ViewModel.SelectedCocktail = selectedCocktail;
-           
+            string url = "ingredientdata/findIngredient/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            IngredientDto selectedIngredients = response.Content.ReadAsAsync<IngredientDto>().Result;
+            ViewModel.selectedIngredient = selectedIngredients;
+
+             url = "cocktailsdata/ListCocktailsForIngredient/" + id;
+            response = client.GetAsync(url).Result;
+            IEnumerable<CocktailDto> cocktails = response.Content.ReadAsAsync<IEnumerable<CocktailDto>>().Result;
+            ViewModel.cocktails = cocktails;
             return View(ViewModel);
         }
 
+       
         public ActionResult Error()
         {
             return View();
         }
-        // GET: Cocktail/New
+        // GET: Ingredients/New
         public ActionResult New()
         {
-            string url = "categorydata/list";
-            HttpResponseMessage response = client.GetAsync(url).Result;
-            IEnumerable<CategoryDto> categories = response.Content.ReadAsAsync<IEnumerable<CategoryDto>>().Result;
 
-            return View(categories);
+
+            return View();
         }
 
-        // POST: Cocktail/Create
+        // POST: Ingredients/Create
         [HttpPost]
-        public ActionResult Create(Cocktail cocktail)
+        public ActionResult Create(Ingredient Ingredients)
         {
             try
             {
                 // TODO: Add insert logic here
-                
-                string url = "CocktailsData/addCocktail/";
+
+                string url = "ingredientdata/addIngredient/";
                 JavaScriptSerializer jss = new JavaScriptSerializer();
-                string jsonpayload = jss.Serialize(cocktail);
+                string jsonpayload = jss.Serialize(Ingredients);
                 HttpContent content = new StringContent(jsonpayload);
                 content.Headers.ContentType.MediaType = "application/json";
                 HttpResponseMessage response = client.PostAsync(url, content).Result;
@@ -88,7 +84,7 @@ namespace passionProjectApplication.Controllers
                 {
                     return RedirectToAction("Error");
                 }
-                
+
             }
             catch
             {
@@ -96,35 +92,28 @@ namespace passionProjectApplication.Controllers
             }
         }
 
-        // GET: Cocktail/Edit/5
+        // GET: Ingredients/Edit/5
         public ActionResult Edit(int id)
 
         {
-            UpdateCocktail  ViewModel =  new UpdateCocktail();
-            string url = "CocktailsData/findcocktail/" + id;
+            string url = "ingredientdata/findIngredient/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
-            CocktailDto cocktailDto = response.Content.ReadAsAsync<CocktailDto>().Result;   
-            ViewModel.selectedCocktail = cocktailDto;
+            IngredientDto IngredientsDto = response.Content.ReadAsAsync<IngredientDto>().Result;
 
-             url = "categorydata/list" ;
-             response = client.GetAsync(url).Result;
-            IEnumerable<CategoryDto> CategoriesOptions = response.Content.ReadAsAsync<IEnumerable<CategoryDto>>().Result;
-
-            ViewModel.CategoriesOptions = CategoriesOptions;
-            return View(ViewModel);
+            return View(IngredientsDto);
         }
 
-        // POST: Cocktail/Edit/5
+        // POST: Ingredients/Edit/5
         [HttpPost]
-        public ActionResult Update(int id, Cocktail cocktail)
+        public ActionResult Update(int id, Ingredient Ingredients)
         {
             try
             {
                 // TODO: Add update logic here
 
-                string url = "CocktailsData/updatecocktail/" + id;
+                string url = "ingredientdata/updateIngredient/" + id;
                 JavaScriptSerializer jss = new JavaScriptSerializer();
-                string jsonpayload = jss.Serialize(cocktail);
+                string jsonpayload = jss.Serialize(Ingredients);
                 HttpContent content = new StringContent(jsonpayload);
                 content.Headers.ContentType.MediaType = "application/json";
                 HttpResponseMessage response = client.PostAsync(url, content).Result;
@@ -143,23 +132,23 @@ namespace passionProjectApplication.Controllers
             }
         }
 
-        // GET: Cocktail/Delete/5
+        // GET: Ingredients/Delete/5
         public ActionResult DeleteConfirm(int id)
         {
-            string url = "CocktailsData/findcocktail/" + id;
+            string url = "ingredientdata/findIngredient/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
-            CocktailDto selectedCocktail =  response.Content.ReadAsAsync<CocktailDto>().Result;
-            return View(selectedCocktail);
+            IngredientDto selectedIngredients = response.Content.ReadAsAsync<IngredientDto>().Result;
+            return View(selectedIngredients);
         }
 
-        // POST: Cocktail/Delete/5
+        // POST: Ingredients/Delete/5
         [HttpPost]
         public ActionResult Delete(int id)
         {
             try
             {
                 // TODO: Add delete logic here
-                string url = "CocktailsData/deletecocktail/" + id;
+                string url = "ingredientdata/deleteIngredient/" + id;
                 HttpContent content = new StringContent("");
                 content.Headers.ContentType.MediaType = "application/json";
                 HttpResponseMessage response = client.PostAsync(url, content).Result;
@@ -172,7 +161,7 @@ namespace passionProjectApplication.Controllers
                     return RedirectToAction("Error");
                 }
 
-               
+
             }
             catch
             {
@@ -181,3 +170,4 @@ namespace passionProjectApplication.Controllers
         }
     }
 }
+

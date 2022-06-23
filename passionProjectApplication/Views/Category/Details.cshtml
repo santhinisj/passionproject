@@ -1,0 +1,50 @@
+﻿@model passionProjectApplication.Models.ViewModels.DetailsCategory
+@{
+    ViewBag.Title = "Details";
+
+}
+<style>
+    .main {
+        margin-top: 3rem;
+        border: 1px solid black;
+        padding: 1rem;
+        text-align: center;
+        border-radius: 8px;
+        background: black;
+        color: white;
+    }
+
+    .heading {
+        background: black;
+        color: white;
+    }
+
+    .button {
+        background: antiquewhite;
+        padding: 10px;
+        border: 1px solid black;
+        border-radius: 4px;
+        color: black;
+    }
+
+    .name {
+        color: navajowhite;
+    }
+</style>
+
+<div class="main">
+
+    <a href="/cocktail/list" class="button">View all cocktails</a>
+
+    <h2>Cocktails related to this category</h2>
+    <div>Category : @Model.SelectedCategory.CategoryName</div>
+
+    <div>
+        @foreach (var cocktail in Model.RelatedCocktails)
+        {
+            <a href="/cocktail/details/@cocktail.CocktailId">@cocktail.CocktailName</a>
+            <br/>
+        }
+    </div>
+    </div>
+

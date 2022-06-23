@@ -1,0 +1,55 @@
+﻿@model IEnumerable<passionProjectApplication.Models.CategoryDto>
+@{
+    ViewBag.Title = "List";
+}
+
+<style>
+    .main {
+        margin-top: 3rem;
+        border: 1px solid black;
+        padding: 1rem;
+        text-align: center;
+        border-radius: 8px;
+        background: black;
+        color: white;
+    }
+
+    .heading {
+        background: black;
+        color: white;
+    }
+
+    .button {
+        background: antiquewhite;
+        padding: 10px;
+        border: 1px solid black;
+        border-radius: 4px;
+        color: black;
+    }
+
+    .name {
+        color: navajowhite;
+    }
+</style>
+
+<div class="main">
+   
+    <div>
+
+
+        <h2>List Of All Categories In Cocktails</h2>
+        @foreach (var category in Model)
+        {
+            if (category != null)
+            {
+                <a href="/category/details/@category.CategoryId">
+                    <p>@category.CategoryName</p>
+
+                </a>
+                <br/>
+            }
+
+        }
+
+    </div>
+   </div>

@@ -12,6 +12,13 @@ namespace passionProjectApplication.Models
         public int IngredientId { get; set; }
         public string IngredientName { get; set; }
 
-        public ICollection<Cocktail> Cocktails { get; set; } 
+        public ICollection<Cocktail> Cocktails { get; set; }
+
     }
+    public class IngredientDto
+        {
+            public int IngredientId { get; set; }
+            public string IngredientName { get; set; }
+
+        }
 }

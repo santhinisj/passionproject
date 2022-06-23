@@ -1,11 +1,57 @@
-﻿@model passionProjectApplication.Models.CocktailDto
+﻿@model passionProjectApplication.Models.ViewModels.DetailsCocktail
 @{
     ViewBag.Title = "View";
-    Layout = "Details";
+
 }
+<style>
+    .main {
+        margin-top: 3rem;
+        border: 1px solid black;
+        padding: 1rem;
+        text-align: center;
+        border-radius: 8px;
+        background: black;
+        color: white;
+    }
 
-<a href="/cocktail/list">Go back to list</a>
-<h2>@Model.CocktailName</h2>
-<div>Is ice required for the cocktail: @Model.IsIceRequired</div>
+    .heading {
+        background: black;
+        color: white;
+    }
+
+    .button {
+        background: antiquewhite;
+        padding: 10px;
+        border: 1px solid black;
+        border-radius: 4px;
+        color: black;
+    }
+
+    .name {
+        color: navajowhite;
+    }
+</style>
+
+<div class="main">
 
 
+    <br />
+    <div style="display:flex;justify-content:flex-start">
+        <a href="/cocktail/list" class="button">Back to list</a>
+
+    </div>
+
+    <h2>@Model.SelectedCocktail.CocktailName</h2>
+    <div>Is ice required for the cocktail: @Model.SelectedCocktail.IsIceRequired</div>
+
+    <div>Category Of Cocktail: @Model.SelectedCocktail.CategoryName</div>
+    <a href="/category/details/@Model.SelectedCocktail.CategoryId">Click to see other cocktails from same category</a>
+
+    <div style="display:flex;justify-content:space-around">
+       
+        <a href="/cocktail/edit/@Model.SelectedCocktail.CocktailId" class="button">Update</a>
+        <a href="/cocktail/DeleteConfirm/@Model.SelectedCocktail.CocktailId" class="button">Delete</a>
+    </div>
+
+  
+</div>

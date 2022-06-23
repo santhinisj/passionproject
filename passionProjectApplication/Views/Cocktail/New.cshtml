@@ -1,22 +1,59 @@
-﻿
+﻿@model IEnumerable<passionProjectApplication.Models.CategoryDto>
 @{
     ViewBag.Title = "New";
 }
+<style>
+    .main {
+        margin-top: 3rem;
+        border: 1px solid black;
+        padding: 1rem;
+        text-align: center;
+        border-radius: 8px;
+        background: black;
+        color: white;
+    }
 
-<h2>Create A New Cocktail</h2>
-<form action="/cocktail/create" method="POST">
-    <div>
-        <label>Enter the cocktail name:</label><input type="text" name="CocktailName" />
-    </div>
-    <div>
-        <label>Is ice required:</label>
-        <select name="IsIceRequired">
-            <option value="true">Yes</option>
-            <option value="false">No</option>
+    .heading {
+        background: black;
+        color: white;
+    }
+
+    .button {
+        background: antiquewhite;
+        padding: 10px;
+        border: 1px solid black;
+        border-radius: 4px;
+        color: black;
+    }
+
+    .name {
+        color: navajowhite;
+    }
+</style>
+<div class="main">
+    <h2>Create A New Cocktail</h2>
+    <form action="/cocktail/create" method="POST">
+        <div>
+            <label>Enter the cocktail name:</label><input type="text" name="CocktailName" style="color:black"/>
+        </div>
+        <div>
+            <label>Is ice required:</label>
+            <select name="IsIceRequired" style="color:black">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+        <label>Category </label>
+        <select name="CategoryId" style="color:black">
+            @foreach (var category in Model)
+            {
+                <option value="@category.CategoryId"> @category.CategoryName</option>
+
+            }
         </select>
-    </div>
-    <div>
-        <input type="submit" value="Add the cocktail" />
-    </div>
-</form>
+        <div>
+            <input type="submit" value="Add the cocktail"  class="button"/>
+        </div>
+    </form>
 
+</div>

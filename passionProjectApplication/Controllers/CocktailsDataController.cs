@@ -26,7 +26,9 @@ namespace passionProjectApplication.Controllers
             {
                 CocktailId = a.CocktailId,
                 CocktailName = a.CocktailName,
-                IsIceRequired = a.IsIceRequired
+                IsIceRequired = a.IsIceRequired,
+                CategoryId = a.Category.CategoryId,
+                CategoryName = a.Category.CategoryName
 
             }));
             return CocktailDtos;
@@ -42,7 +44,9 @@ namespace passionProjectApplication.Controllers
             {
                 CocktailId = Cocktail.CocktailId,
                 CocktailName = Cocktail.CocktailName,
-                IsIceRequired = Cocktail.IsIceRequired
+                IsIceRequired = Cocktail.IsIceRequired,
+                CategoryId = Cocktail.Category.CategoryId,
+                CategoryName= Cocktail.Category.CategoryName
 
             };
             
@@ -53,6 +57,52 @@ namespace passionProjectApplication.Controllers
 
             return Ok(CocktailDto);
         }
+
+
+        //agthers info about cocktails related to a particular category
+        //api/cocktaildata/listcocktailsforcategory/3
+        [HttpGet]
+        [ResponseType(typeof(CocktailDto))]
+        public IHttpActionResult ListCocktailsForCategory(int id)
+        {
+            List<Cocktail> Cocktails = db.Cocktails.Where(a => a.CategoryId == id).ToList();
+            List<CocktailDto> CocktailDtos = new List<CocktailDto>();
+            Cocktails.ForEach(a => CocktailDtos.Add(new CocktailDto()
+            {
+                CocktailId = a.CocktailId,
+                CocktailName = a.CocktailName,
+                IsIceRequired = a.IsIceRequired,
+                CategoryId = a.Category.CategoryId,
+                CategoryName = a.Category.CategoryName
+
+            }));
+            return Ok(CocktailDtos);
+
+        }
+
+        //agthers info about cocktails related to a particular ingredient
+        //api/cocktailsdata/ListCocktailsForIngredient/3
+        [HttpGet]
+        [ResponseType(typeof(CocktailDto))]
+        public IHttpActionResult ListCocktailsForIngredient(int id)
+        {
+            //all cocktails that have ingredients that match with this id
+            List<Cocktail> Cocktails = db.Cocktails.Where(a => a.Ingredients.Any(k=>k.IngredientId== id)).ToList();
+            List<CocktailDto> CocktailDtos = new List<CocktailDto>();
+            Cocktails.ForEach(a => CocktailDtos.Add(new CocktailDto()
+            {
+                CocktailId = a.CocktailId,
+                CocktailName = a.CocktailName,
+                IsIceRequired = a.IsIceRequired,
+                CategoryId = a.Category.CategoryId,
+                CategoryName = a.Category.CategoryName
+
+            }));
+
+            return Ok(CocktailDtos);
+
+        }
+
 
         // PUT: api/CocktailsData/UpdateCocktail/5
         [HttpPost]
